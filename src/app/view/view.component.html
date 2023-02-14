@@ -1,0 +1,141 @@
+<form class="example-form" (ngSubmit)="saveUser()" #myForm="ngForm">
+    <mat-form-field class="example-full-width">
+        <mat-label>שם פרטי</mat-label>
+        <input matInput placeholder="firstName" type="text" [(ngModel)]="user.FirstName"
+            [ngModelOptions]="{standalone: true}" minlength="2"  maxlength="15" #uFirstName="ngModel"  required />
+            <div class="error" *ngIf="uFirstName.touched&&uFirstName.errors&&uFirstName.errors">שם פרטי
+                הוא
+                שדה חובה</div>
+    </mat-form-field>
+    <br />
+    
+
+    <mat-form-field class="example-full-width">
+        <mat-label>משפחה</mat-label>
+        <input matInput placeholder="lastName" type="text" [(ngModel)]="user.LastName"
+            [ngModelOptions]="{standalone: true}" minlength="2"  maxlength="15"  #uLastName="ngModel" required />
+            <div class="error" *ngIf="uLastName.touched&&uLastName.errors&&uLastName.errors">שם משפחה
+                הוא
+                שדה חובה</div>
+    </mat-form-field>
+    <br />
+
+
+    <mat-form-field class="example-full-width">
+        <mat-label> תעודת זהות</mat-label>
+        <input matInput placeholder="TZ" type="text" [(ngModel)]="user.Tz" [ngModelOptions]="{standalone: true}"
+            minlength="9"  maxlength="9" #uTz="ngModel"  pattern="[0-9]{9}"  required />
+            <div class="error" *ngIf="uTz.touched&&uTz.errors&&uTz.errors">תעודת זהות
+                היא
+                שדה חובה</div>
+    </mat-form-field>
+    <br />
+
+    <mat-form-field class="example-full-width">
+        <mat-label>תאריך לידה</mat-label>
+        <input matInput placeholder="birthDate" type="date" [(ngModel)]="user.BirthDate" required
+            [ngModelOptions]="{standalone: true}" #uDate="ngModel" />
+            <div class="error" *ngIf="uDate.touched&&uDate.errors&&uDate.errors">תאריך
+                הוא
+                שדה חובה</div>
+    </mat-form-field>
+    <br />
+    <h4>מין</h4>
+    <mat-form-field appearance="fill">
+        <mat-label>gender</mat-label>
+        <mat-select matNativeControl [(ngModel)]="user.Gender" [ngModelOptions]="{standalone: true}" required #uGender="ngModel">
+            <mat-option *ngFor="let item of genderList" [value]="item">
+                {{item}}
+            </mat-option>
+        </mat-select>  <div class="error" *ngIf="uGender.touched&&uGender.errors&&uGender.errors">מין
+            הוא
+            שדה חובה</div>
+    </mat-form-field>
+
+    <h4>קופת חולים</h4>
+    <mat-form-field appearance="fill">
+        <mat-label>HMO</mat-label>
+        <mat-select matNativeControl [(ngModel)]="user.HMO" [ngModelOptions]="{standalone: true}"#uHMO="ngModel" required>
+            <mat-option *ngFor="let item of HMOList" [value]="item">
+                {{item}}
+            </mat-option>
+        </mat-select>
+        <div class="error" *ngIf="uHMO.touched&&uHMO.errors&&uHMO.errors">קופת חולים
+            הוא
+            שדה חובה</div>
+    </mat-form-field>
+
+    <section class="section">
+        <div class="example-button-row">
+            <button mat-stroked-button color="primary" type="submit" [disabled]="!myForm.valid">לשמירת משתמש</button>
+        </div>
+    </section>
+
+</form>
+
+<div *ngIf="isButtonChild">
+    <section class="section">
+        <div class="example-button-row">
+            <button mat-stroked-button color="primary" (click)="addChild()">לרישום ילד</button>
+        </div>
+    </section>
+</div>
+
+
+<div *ngIf="isChild">
+    <form class="example-form" (ngSubmit)="addEntity()" #myFormChild="ngForm">
+        <mat-form-field class="example-full-width">
+            <mat-label>שם פרטי</mat-label>
+            <input matInput placeholder="firstName" type="text" [(ngModel)]="child.FirstName"
+                [ngModelOptions]="{standalone: true}" minlength="2"  maxlength="15" #myFirstNameC="ngModel" required />
+                <div class="error" *ngIf="myFirstNameC.touched&&myFirstNameC.errors&&myFirstNameC.errors">שם פרטי
+                    הוא
+                    שדה חובה</div>
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="example-full-width">
+            <mat-label>משפחה</mat-label>
+            <input matInput placeholder="lastName" type="text" [(ngModel)]="child.LastName"
+                [ngModelOptions]="{standalone: true}" minlength="2" required maxlength="15" #cLastName="ngModel" required />
+                <div class="error" *ngIf="cLastName.touched&&cLastName.errors&&cLastName.errors">שם משפחה
+                    הוא
+                    שדה חובה</div>
+        </mat-form-field>
+        <br />
+
+
+        <mat-form-field class="example-full-width">
+            <mat-label> תעודת זהות</mat-label>
+            <input matInput placeholder="TZ" type="text" [(ngModel)]="child.Tz" [ngModelOptions]="{standalone: true}"
+                minlength="9" required maxlength="9"    #uTz="ngModel" pattern="[0-9]{9}" required />
+                <div class="error" *ngIf="uTz.touched&&uTz.errors&&uTz.errors">תעודת זהות
+                    היא
+                    שדה חובה</div>
+        </mat-form-field>
+        <br />
+   
+        
+        <mat-form-field class="example-full-width">
+            <mat-label>תאריך לידה</mat-label>
+            <input matInput placeholder="birthDate" type="date" [(ngModel)]="child.BirthDate" 
+                [ngModelOptions]="{standalone: true}"  #DateC="ngModel" required />
+                <div class="error" *ngIf="DateC.touched&&DateC.errors&&DateC.errors">תאריך
+                    הוא
+                    שדה חובה</div>
+        </mat-form-field>
+        <br />
+      
+       
+        <section class="section">
+            <div class="example-button-row" >
+                <button mat-stroked-button color="primary" type="submit" [disabled]="!myFormChild.valid">אישור</button>
+            </div> 
+        </section>
+    </form>
+    <section class="section">
+        <div class="example-button-row">
+            <button mat-stroked-button color="primary" (click)="moreChild()">להכנסת ילד נוסף</button>
+        </div>
+    </section>
+</div>
